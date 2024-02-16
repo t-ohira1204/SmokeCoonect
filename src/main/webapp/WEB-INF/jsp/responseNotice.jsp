@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="model.User" %>
 <%
-// セッションスコープからリクエストユーザーネームを取得
-String resUser = (String)session.getAttribute("resUser");
+// アプリケーションスコープからリクエストユーザーネームを取得
+String resUser = (String)application.getAttribute("resUser");
 %>
 <!DOCTYPE html>
 <html>

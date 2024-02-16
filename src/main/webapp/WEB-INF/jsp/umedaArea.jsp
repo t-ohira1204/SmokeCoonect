@@ -32,7 +32,7 @@ String errorMsg = (String) request.getAttribute("errorMsg");
 <% } %>
 <% for(Posting posting : postingList){%>
   <p>-----------------------------------</p>
-  <p>ユーザーネーム：<%=posting.getUserName()%><br>
+  <p>ID：<%=posting.getId() %><br>ユーザーネーム：<%=posting.getUserName()%><br>
   喫煙所名：<%=posting.getPlace()%><br>
   滞在時間：<%=posting.getTime()%></p><br>
   <form action="UserResponseServlet" method="post">

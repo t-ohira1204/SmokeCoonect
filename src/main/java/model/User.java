@@ -13,3 +13,5 @@ public class User implements Serializable {
   public String getName() { return name; }
   public String getPass() { return pass; }
 }
+
+//コメント追加

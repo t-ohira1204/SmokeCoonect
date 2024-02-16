@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.PostData;
 import model.Posting;
 import model.PostingLogic;
 import model.User;
@@ -61,9 +60,7 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
     request.setCharacterEncoding("UTF-8");
     String place = request.getParameter("place");
     String time = request.getParameter("time");
-    
-    //PostDataインスタンス（投稿内容情報）の生成
-    PostData postData = new PostData(place,time,formatNowTime);
+    int id;
 
     // 入力値チェック
     if (place != null && time != null) {
@@ -75,8 +72,10 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
       HttpSession session = request.getSession();
       User loginUser = (User) session.getAttribute("loginUser");
 
+      // 投稿数に応じてIDを代入
+      id = postingList.size();
       // つぶやきをつぶやきリストに追加
-      Posting posting = new Posting(loginUser.getName(), place,time,formatNowTime);
+      Posting posting = new Posting(loginUser.getName(), place,time,formatNowTime,id);
       PostingLogic postingLogic = new PostingLogic();
       postingLogic.execute(posting, postingList);
 

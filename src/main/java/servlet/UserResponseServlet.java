@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +41,10 @@ public class UserResponseServlet extends HttpServlet {
 	    // セッションスコープからレスポンスユーザーネームを取得
 	    String resUser = loginUser.getName();
 	    
-		// レスポンスユーザーネームをセッションスコープに保存
-	      session.setAttribute("resUser", resUser);
+	    //インスタンスを生成
+	    ServletContext application = this.getServletContext();
+		// レスポンスユーザーネームをアプリケーションスコープに保存
+	      application.setAttribute("resUser", resUser);
 	      
 	      RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/responseNotice.jsp");
 	      dispatcher.forward(request, response);
