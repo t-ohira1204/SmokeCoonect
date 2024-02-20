@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Posting;
+import dao.PostsDAO;
+import model.PostData;
 import model.PostingLogic;
 import model.User;
 
@@ -30,14 +30,12 @@ SimpleDateFormat sdf2
 String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23秒
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    // つぶやきリストをアプリケーションスコープから取得
-    ServletContext application = this.getServletContext();
-    List<Posting> postingList = (List<Posting>) application.getAttribute("postingList");
+	  PostsDAO dao = new PostsDAO();
+    List<PostData> postingList = (List<PostData>)dao.displayPostData();
     // 取得できなかった場合は、つぶやきリストを新規作成して
     // アプリケーションスコープに保存
     if (postingList == null) {
       postingList = new ArrayList<>();
-      application.setAttribute("postingList", postingList);
     }
     
     // ログインしているか確認するため
@@ -56,38 +54,28 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
   }
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    // リクエストパラメータの取得
-    request.setCharacterEncoding("UTF-8");
-    String place = request.getParameter("place");
-    String time = request.getParameter("time");
-    int id;
+	    request.setCharacterEncoding("UTF-8");
+	    
+	    // PostsDAOインスタンスを生成し、PostDataの情報を取得
+	    PostsDAO dao = new PostsDAO();
+	    
+	    // PostData型のリストpostingListにdisplayPostDataの情報を格納
+	    List<PostData> postingList = dao.displayPostData();
 
-    // 入力値チェック
-    if (place != null && time != null) {
-      // アプリケーションスコープに保存されたつぶやきリストを取得
-      ServletContext application = this.getServletContext();
-      List<Posting> postingList = (List<Posting>) application.getAttribute("postingList");
+	    // 新しい投稿データを取得
+	    String userName = request.getParameter("userName");
+	    String place = request.getParameter("place");
+	    String time = request.getParameter("time");
 
-      // セッションスコープに保存されたユーザー情報を取得
-      HttpSession session = request.getSession();
-      User loginUser = (User) session.getAttribute("loginUser");
+	    // 取得した情報から新しいPostDataインスタンスを作成
+	    PostData postData = new PostData(userName, place, time);
 
-      // 投稿数に応じてIDを代入
-      id = postingList.size();
-      // つぶやきをつぶやきリストに追加
-      Posting posting = new Posting(loginUser.getName(), place,time,formatNowTime,id);
-      PostingLogic postingLogic = new PostingLogic();
-      postingLogic.execute(posting, postingList);
+	    // PostingLogicのexecuteメソッドでpostingListに投稿内容をリストに追加
+	    PostingLogic postingLogic = new PostingLogic();
+	    postingLogic.execute(postData, postingList);
 
-      // アプリケーションスコープにつぶやきリストを保存
-      application.setAttribute("postingList", postingList);
-    } else {
-      //エラーメッセージをリクエストスコープに保存
-      request.setAttribute("errorMsg", "喫煙所もしくは滞在時間を選択してください。");
-    }
-
-    // メイン画面にフォワード
-    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
-    dispatcher.forward(request, response);
-  }
+	    // メイン画面にフォワード
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
+	    dispatcher.forward(request, response);
+	}
 }
