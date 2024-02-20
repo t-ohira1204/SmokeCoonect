@@ -55,10 +55,10 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
-	    
+
 	    // PostsDAOインスタンスを生成し、PostDataの情報を取得
 	    PostsDAO dao = new PostsDAO();
-	    
+
 	    // PostData型のリストpostingListにdisplayPostDataの情報を格納
 	    List<PostData> postingList = dao.displayPostData();
 
@@ -67,8 +67,17 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
 	    String place = request.getParameter("place");
 	    String time = request.getParameter("time");
 
+	    // ここで新しい投稿データのIDを取得する方法が必要です。
+	    // 以下は、単純に現在の時刻を使用する例です。
+	    // 実際にはデータベースの自動生成IDや他の一意な方法を使用するべきです。
+	    // 例: long id = System.currentTimeMillis();
+
 	    // 取得した情報から新しいPostDataインスタンスを作成
-	    PostData postData = new PostData(userName, place, time);
+	    PostData postData = new PostData(userName, place, time, 0); // 0 は仮のID
+
+	    // IDを取得する（実際のデータベースによるIDの取得方法に置き換える）
+	    int id = dao.generateUniqueId(); // これは例で、実際のデータベースによるID生成メソッドを使用するべきです。
+	    postData.setId(id);
 
 	    // PostingLogicのexecuteメソッドでpostingListに投稿内容をリストに追加
 	    PostingLogic postingLogic = new PostingLogic();
@@ -78,4 +87,5 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
 	    dispatcher.forward(request, response);
 	}
+
 }
