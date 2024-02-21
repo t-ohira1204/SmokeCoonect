@@ -124,5 +124,40 @@ public class PostsDAO {
 				return false;
 				}
 	}
+	
+	public boolean isButton(int reqId) {
+		// JDBCドライバを読み込む
+		try {
+			Class.forName("org.h2.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+				}
+		
+		// データベースへ接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT IS_BUTTON FROM POSTS WHERE ID = ?";
+			try (PreparedStatement pStmt = conn.prepareStatement(sql)) {
+				pStmt.setInt(1, reqId);
+				
+				try (ResultSet rs = pStmt.executeQuery()) {
+					if (rs.next()) {
+						// IS_BUTTON 列の値が "TRUE" または "FALSE" であるかを判定
+						String isButtonValue = rs.getString("IS_BUTTON");
+						return "TRUE".equalsIgnoreCase(isButtonValue);
+						} else {
+							// 対象の投稿が見つからない場合など
+							return false;
+							}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return false;
+					}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+		}
+	}
 
 }
