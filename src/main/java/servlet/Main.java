@@ -76,8 +76,8 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
 	    PostData postData = new PostData(userName, place, time, 0); // 0 は仮のID
 
 	    // IDを取得する（実際のデータベースによるIDの取得方法に置き換える）
-	    int id = dao.generateUniqueId(); // これは例で、実際のデータベースによるID生成メソッドを使用するべきです。
-	    postData.setId(id);
+//	    int id = dao.generateUniqueId(); // これは例で、実際のデータベースによるID生成メソッドを使用するべきです。
+//	    postData.setId(id);
 
 	    // PostingLogicのexecuteメソッドでpostingListに投稿内容をリストに追加
 	    PostingLogic postingLogic = new PostingLogic();

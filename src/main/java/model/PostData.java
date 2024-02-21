@@ -17,6 +17,12 @@ public class PostData implements Serializable {
         this.time = time;
         this.id = id;
     }
+    
+    public PostData(String userName, String place, String time) {
+        this.userName = userName;
+        this.place = place;
+        this.time = time;
+    }
 
     public String getUserName() {
         return userName;
