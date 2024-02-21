@@ -45,6 +45,7 @@
                 喫煙所名：<%= posting.getPlace() %><br>
                 滞在時間：<%= posting.getTime() %></p><br>
                 <form action="UserResponseServlet" method="post">
+                	<input type="hidden" name="ID" value="<%=posting.getId() %>">
                     <input type="submit" value="ライターを貸す">
                 </form>
                 <p>-----------------------------------</p>

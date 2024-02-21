@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.PostData;
 import model.User;
 import model.UserResponseLogic;
 
@@ -37,12 +38,17 @@ public class UserResponseServlet extends HttpServlet {
 	    // セッションスコープからユーザー情報を取得
 		HttpSession session = request.getSession();
 	    User loginUser = (User) session.getAttribute("loginUser");
+	    
+	    PostData postData = new PostData();
 		
 	    // セッションスコープからレスポンスユーザーネームを取得
 	    String resUser = loginUser.getName();
+	 // PostDataインスタンスのIDを取得
+	    String reqIdString = request.getParameter("ID");
+	    int reqId = Integer.parseInt(reqIdString);
 	    
 	    UserResponseLogic userResponseLogic = new UserResponseLogic();
-	    userResponseLogic.pushResButton(resUser);
+	    userResponseLogic.pushResButton(resUser,reqId);
 	      
 	      RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/responseNotice.jsp");
 	      dispatcher.forward(request, response);
