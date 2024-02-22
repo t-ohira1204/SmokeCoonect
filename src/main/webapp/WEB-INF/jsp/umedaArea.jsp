@@ -31,7 +31,8 @@
     <div class="wrapper">
         <h1>SmokeConnect</h1>
         <h2>梅田エリア</h2>
-        <p><%= loginUser.getName() %>さん、ログイン中<a href="AreaSelectServlet">エリア選択へ戻る</a></p>
+        <p><%= loginUser.getName() %>さん、ログイン中<br>
+        <a href="AreaSelectServlet">エリア選択へ戻る</a></p>
         <%  // 自身の投稿にボタンが押されているかを確認
         PostsDAO dao = new PostsDAO();
         String reqName = loginUser.getName();

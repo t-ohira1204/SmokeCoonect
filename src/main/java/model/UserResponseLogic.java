@@ -28,7 +28,10 @@ public class UserResponseLogic {
 	
 	public void reqCompleted(String reqName) {
 		PostsDAO dao = new PostsDAO();
+		String resUser = dao.getResUserName(reqName);
+		int nowPoint = dao.getNowPoint(resUser);
+		dao.giftPoint(nowPoint, resUser);
 		dao.reqCompleted(reqName);
 	}
-
+	
 }

@@ -41,12 +41,16 @@ public class UserResponseServlet extends HttpServlet {
 			
 			// セッションスコープからレスポンスユーザーネームを取得
 			String resUser = loginUser.getName();
+			
 			// PostDataインスタンスのIDを取得
 			String reqIdString = request.getParameter("ID");
 			int reqId = Integer.parseInt(reqIdString);
-			    
+			
+			// UserResponseLogicインスタンスを生成しレスポンスユーザーネームと投稿IDをDAOに送る
 			UserResponseLogic userResponseLogic = new UserResponseLogic();
 			userResponseLogic.pushResButton(resUser,reqId);
+			
+			// レスポンス成功通知画面にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/responseSuccess.jsp");
 			dispatcher.forward(request, response);
 			}
@@ -58,6 +62,8 @@ public class UserResponseServlet extends HttpServlet {
 							
 			// セッションスコープからリクエストユーザーネームを取得
 			String reqName = loginUser.getName();
+			
+			// リクエストユーザーネームをDAOに送る
 			UserResponseLogic userResponseLogic = new UserResponseLogic();
 			userResponseLogic.reqCompleted(reqName);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
