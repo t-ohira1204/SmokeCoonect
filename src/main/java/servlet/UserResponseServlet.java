@@ -65,6 +65,7 @@ public class UserResponseServlet extends HttpServlet {
 			
 			// リクエストユーザーネームをDAOに送る
 			UserResponseLogic userResponseLogic = new UserResponseLogic();
+			userResponseLogic.giftPoint(reqName);
 			userResponseLogic.reqCompleted(reqName);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
 			dispatcher.forward(request, response);

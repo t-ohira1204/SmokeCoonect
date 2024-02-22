@@ -220,32 +220,32 @@ public class PostsDAO {
 		// JDBCドライバを読み込む
 		try {
 			Class.forName("org.h2.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-				}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
 				
 		// データベースへ接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT POINT FROM USERS WHERE RES_USER = ?";
+			String sql = "SELECT POINT FROM USERS WHERE NAME = ?";
 			try (PreparedStatement pStmt = conn.prepareStatement(sql)) {
 				pStmt.setString(1, resUser);
 				
 				try (ResultSet rs = pStmt.executeQuery()) {
 					if (rs.next()) {
 						return rs.getInt("POINT");
-						}
+					}
 					return rs.getInt("POINT");
-					}catch (SQLException e) {
+				}catch (SQLException e) {
 						e.printStackTrace();
 						return 0;
-						}	
-				}catch (SQLException e) {
+				}	
+			}catch (SQLException e) {
 					e.printStackTrace();
 					return 0;
 					}
-			}catch (SQLException e) {
-				e.printStackTrace();
+		}catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return 0;
 	}
