@@ -17,6 +17,13 @@ import model.User;
 public class LoginServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// top画面にフォワード
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/top.jsp");
+	    dispatcher.forward(request, response);
+	}
+  
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     // リクエストパラメータの取得
     request.setCharacterEncoding("UTF-8");

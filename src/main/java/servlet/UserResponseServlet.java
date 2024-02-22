@@ -47,7 +47,7 @@ public class UserResponseServlet extends HttpServlet {
 			    
 			UserResponseLogic userResponseLogic = new UserResponseLogic();
 			userResponseLogic.pushResButton(resUser,reqId);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/responseSuccess.jsp");
 			dispatcher.forward(request, response);
 			}
 		

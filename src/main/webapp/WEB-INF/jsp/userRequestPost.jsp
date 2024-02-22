@@ -27,5 +27,6 @@
 	</div>
 	<input type="submit" value="投稿">
 </form>
+<p><a href="Main">戻る</a></p>
 </body>
 </html>

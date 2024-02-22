@@ -11,5 +11,6 @@
 <h1>SmokeConnect</h1>
 <h2>エリア選択</h2>
 <p><a href="Main">梅田エリア</a></p>
+<p><a href="Login">戻る</a></p>
 </body>
 </html>
