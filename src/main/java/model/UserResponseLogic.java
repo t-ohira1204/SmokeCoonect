@@ -26,5 +26,9 @@ public class UserResponseLogic {
 		return dao.getResUserName(reqName);
 	}
 	
+	public void reqCompleted(String reqName) {
+		PostsDAO dao = new PostsDAO();
+		dao.reqCompleted(reqName);
+	}
 
 }

@@ -18,7 +18,7 @@ User loginUser = (User) session.getAttribute("loginUser");
 <% if(loginUser != null) { %>
   <p>ログインに成功しました</p>
   <p>ユーザー情報</p>
-  <p>ようこそ、<%= loginUser.getName() %>さん</p>
+  <p>ようこそ、<%= loginUser.getName() %>さん</p><a href="LogoutServlet">ログアウトする</a>
   <a href="AreaSelectServlet">エリア選択画面へ</a>
 <% } else { %>
   <p>ログインに失敗しました</p>

@@ -192,4 +192,32 @@ public class PostsDAO {
 			}
 		return null;
 	}
+	public boolean reqCompleted(String reqName) {
+		// JDBCドライバを読み込む
+				try {
+					Class.forName("org.h2.Driver");
+					} catch (ClassNotFoundException e) {
+						throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+						}
+			    
+				// データベースへ接続
+				try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+					String sql = "DELETE FROM POSTS WHERE NAME = ? AND IS_BUTTON = TRUE";
+					
+					try (PreparedStatement pStmt = conn.prepareStatement(sql)) {
+						pStmt.setString(1, reqName);
+						
+						// DELETE文を実行し、投稿内容をDELETE
+						int affectedRows = pStmt.executeUpdate();
+
+						return affectedRows > 0; // 更新が成功したかどうかを返す
+						} catch (SQLException e) {
+							e.printStackTrace();
+							return false;
+							}
+					} catch (SQLException e) {
+						e.printStackTrace();
+						return false;
+						}
+	}
 }

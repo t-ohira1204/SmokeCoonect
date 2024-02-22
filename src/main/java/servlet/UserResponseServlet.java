@@ -35,30 +35,33 @@ public class UserResponseServlet extends HttpServlet {
 	
 		String action = request.getParameter("action");
 		if(action.equals("resAction")) {
-	    // セッションスコープからユーザー情報を取得
-		HttpSession session = request.getSession();
-	    User loginUser = (User) session.getAttribute("loginUser");
-		
-	    // セッションスコープからレスポンスユーザーネームを取得
-	    String resUser = loginUser.getName();
-	 // PostDataインスタンスのIDを取得
-	    String reqIdString = request.getParameter("ID");
-	    int reqId = Integer.parseInt(reqIdString);
-	    
-	    UserResponseLogic userResponseLogic = new UserResponseLogic();
-//	    boolean isButtonResult = 
-	    		userResponseLogic.pushResButton(resUser,reqId);
-//	    if(isButtonResult == true) {
-//	    	System.out.println("さーぶれっとでとぅるー！");
-//	    }
-	      
-	      RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
-	      dispatcher.forward(request, response);
-		}
-		
+			// セッションスコープからユーザー情報を取得
+			HttpSession session = request.getSession();
+			User loginUser = (User) session.getAttribute("loginUser");
+			
+			// セッションスコープからレスポンスユーザーネームを取得
+			String resUser = loginUser.getName();
+			// PostDataインスタンスのIDを取得
+			String reqIdString = request.getParameter("ID");
+			int reqId = Integer.parseInt(reqIdString);
+			    
+			UserResponseLogic userResponseLogic = new UserResponseLogic();
+			userResponseLogic.pushResButton(resUser,reqId);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
+			dispatcher.forward(request, response);
+			}
 		
 		if(action.equals("Completed")) {
-			//ここに「貸与完了ボタン」が押された時の処理
+			// セッションスコープからユーザー情報を取得
+			HttpSession session = request.getSession();
+			User loginUser = (User) session.getAttribute("loginUser");
+							
+			// セッションスコープからリクエストユーザーネームを取得
+			String reqName = loginUser.getName();
+			UserResponseLogic userResponseLogic = new UserResponseLogic();
+			userResponseLogic.reqCompleted(reqName);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
+			dispatcher.forward(request, response);
 		}
 		
 		
