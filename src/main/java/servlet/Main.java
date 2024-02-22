@@ -42,11 +42,11 @@ String formatNowTime = sdf2.format(nowTime); // 2020年12月20日 13時56分23�
     // セッションスコープからユーザー情報を取得
     HttpSession session = request.getSession();
     User loginUser = (User) session.getAttribute("loginUser");
+    
     if (loginUser == null) { // ログインしていない場合
       // リダイレクト
       response.sendRedirect("index.jsp");
-    } else { // ログイン済みの場合
-      // フォワード
+    } else { // ログイン済みの場合ード
       RequestDispatcher dispatcher =
           request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
       dispatcher.forward(request, response);

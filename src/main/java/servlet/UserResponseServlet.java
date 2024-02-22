@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import dao.PostsDAO;
+import model.User;
+import model.UserResponseLogic;
 
 /**
  * Servlet implementation class UserResponseServlet
@@ -23,34 +25,49 @@ public class UserResponseServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		// エリア選択画面にフォワード
+		
+		// 通知画面にフォワード
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/responseNotice.jsp");
 	    dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		String action = request.getParameter("action");
+		if(action.equals("resAction")) {
+	    // セッションスコープからユーザー情報を取得
+		HttpSession session = request.getSession();
+	    User loginUser = (User) session.getAttribute("loginUser");
 		
-//	    // セッションスコープからユーザー情報を取得
-//		HttpSession session = request.getSession();
-//	    User loginUser = (User) session.getAttribute("loginUser");
-//	    
-//	    PostData postData = new PostData();
-//		
-//	    // セッションスコープからレスポンスユーザーネームを取得
-//	    String resUser = loginUser.getName();
-//	 // PostDataインスタンスのIDを取得
-//	    String reqIdString = request.getParameter("ID");
-//	    int reqId = Integer.parseInt(reqIdString);
-//	    
-//	    UserResponseLogic userResponseLogic = new UserResponseLogic();
-//	    userResponseLogic.pushResButton(resUser,reqId);
-//	      
-//	      RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/responseNotice.jsp");
-//	      dispatcher.forward(request, response);
-		PostsDAO dao = new PostsDAO();
-		boolean result = dao.isButton(50);
-		System.out.println(result);
+	    // セッションスコープからレスポンスユーザーネームを取得
+	    String resUser = loginUser.getName();
+	 // PostDataインスタンスのIDを取得
+	    String reqIdString = request.getParameter("ID");
+	    int reqId = Integer.parseInt(reqIdString);
+	    
+	    UserResponseLogic userResponseLogic = new UserResponseLogic();
+//	    boolean isButtonResult = 
+	    		userResponseLogic.pushResButton(resUser,reqId);
+//	    if(isButtonResult == true) {
+//	    	System.out.println("さーぶれっとでとぅるー！");
+//	    }
+	      
+	      RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/umedaArea.jsp");
+	      dispatcher.forward(request, response);
+		}
+		
+		
+		if(action.equals("Completed")) {
+			//ここに「貸与完了ボタン」が押された時の処理
+		}
+		
+		
+		
+		
+			//テスト用
+			//		PostsDAO dao = new PostsDAO();
+			//		Boolean Result  = dao.isButton(53);
+			//		System.out.println(Result);
+			//テスト用
 	}
 }
